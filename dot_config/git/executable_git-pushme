@@ -1,0 +1,27 @@
+#!/bin/bash
+# https://gist.githubusercontent.com/devxoul/a972ba0db2a25b989887/raw/f62353501becb274eb63c76b83fbcc01250a286d/git-pushme
+# Equal to 'git push origin CURRENT_BRANCH'
+# Usage: git pushme
+
+BRANCH=$(git branch --list | awk '{ if ($1 == "*") print $2 }')
+
+while true; do
+    read -p "Push branch '$BRANCH' to origin? [Y/n] " -n 1 -r
+    echo
+
+    if [[ ${#REPLY} > 0 && $REPLY =~ ^[Nn]$ ]]
+    then
+        echo "Abort."
+        exit 1
+    fi
+
+    if [[ ${#REPLY} == 0 || $REPLY =~ ^[Yy]$ ]]
+    then
+        COMMAND="git push -u origin $BRANCH ${*:1}"
+        echo -e "Executing command '$COMMAND'"
+        $COMMAND
+        exit 0
+    fi
+
+    echo "Enter 'y' or 'n'."
+done

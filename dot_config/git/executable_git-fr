@@ -1,0 +1,19 @@
+#!/bin/bash
+# Equal to 'git fetch upstream and rebase'
+# Usage: git fr [branch-name]
+
+set -e
+
+TARGET_BRANCH=$1
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+if [[ -z "$TARGET_BRANCH" ]]; then
+	echo "Usage: git fr <target-branch>"
+	exit 1
+fi
+
+echo "Fetching upstream..."
+git fetch upstream
+
+echo "Rebasing $CURRENT_BRANCH onto $TARGET_BRANCH..."
+git rebase $TARGET_BRANCH

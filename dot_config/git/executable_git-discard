@@ -1,0 +1,5 @@
+#!/bin/bash
+# Equal to `git reset --hard HEAD`
+# Usage: git pushme
+
+git reset --hard HEAD
