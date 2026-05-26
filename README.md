@@ -33,10 +33,15 @@
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# 1Password (cask + CLI) + chezmoi
-brew install --cask 1password
-brew install 1password-cli chezmoi
+# 1Password 앱 — brew cask 가 SHA 깨졌으면 1password.com 또는 App Store 에서 직접
+brew install --cask 1password || open https://1password.com/downloads/mac
+
+# CLI + chezmoi
+brew install --cask 1password-cli
+brew install chezmoi
 ```
+
+> `brew install --cask 1password` 가 `Cask reports different checksum` 으로 실패하면 MacPaw upstream 과 homebrew-cask 가 어긋난 일시적 상황. 직접 다운로드 후 다음 단계로 진행.
 
 ### 2-2. 1Password GUI 셋업 + CLI 로그인
 
