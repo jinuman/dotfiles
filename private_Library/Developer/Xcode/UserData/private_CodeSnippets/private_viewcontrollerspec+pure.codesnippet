@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string></string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>import &lt;#name#&gt;Test
+import &lt;#name#&gt;UI
+@testable import &lt;#name#&gt;
+
+final class &lt;#name#&gt;ViewControllerSpec: QuickSpec {
+  override func spec() {
+  }
+}
+
+extension Factory where Module == &lt;#name#&gt;ViewController {
+  static func dummy() -&gt; Factory {
+    return .init(dependency: .init())
+  }
+}
+</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>2633990D-B131-4D0A-9BEC-2B2B7965921F</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string></string>
+	<key>IDECodeSnippetTitle</key>
+	<string>ViewControllerSpec+Pure</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

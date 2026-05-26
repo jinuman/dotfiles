@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string></string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>import SwiftUI
+import DesignFoundation
+
+/// 디자인시스템 `Base Component` 입니다. `Clay`, `Mold`에서 사용할 수 있어요.
+public struct Base&lt;#name#&gt;: View {
+
+    // MARK: Constants
+    
+    
+    // MARK: Properties
+
+
+    // MARK: Initializing
+
+    /// - Parameters:
+    ///   - &lt;#name#&gt;: &lt;#description#&gt;
+    ///   - &lt;#name#&gt;: &lt;#description#&gt;
+    ///   - &lt;#name#&gt;: &lt;#description#&gt;
+    public init() {}
+
+
+    // MARK: Body
+
+    /// body
+    public var body: some View {
+        // container layer
+        ZStack {
+            // state layer
+            stateLayer
+
+            // content layer
+            contentLayer
+        }
+        .onTapGesture {
+
+        }
+    }
+
+    private var stateLayer: some View {
+        EmptyView()
+    }
+
+    private var contentLayer: some View {
+        EmptyView()
+    }
+}
+
+#Preview {
+    Base&lt;#name#&gt;()
+}
+</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>23915297-9B5C-4A8A-94D2-A0A79BB8AACF</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string></string>
+	<key>IDECodeSnippetTitle</key>
+	<string>DesignSystem - Base Component</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
