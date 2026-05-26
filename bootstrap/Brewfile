@@ -1,0 +1,189 @@
+# =============================================================================
+# Brewfile — Jinuman's Mac setup
+# Apply with: brew bundle --file=./Brewfile
+# Dump with:  brew bundle dump --describe --file=./Brewfile --force
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Taps
+# -----------------------------------------------------------------------------
+tap "hkamran80/things"   # for: multiliner (Xcode source extension)
+
+# -----------------------------------------------------------------------------
+# Shell / core CLI
+# -----------------------------------------------------------------------------
+brew "zsh"
+brew "bash"               # newer bash than macOS default
+brew "antidote"           # zsh plugin manager (used by dot_zsh_plugins.txt)
+brew "starship"           # cross-shell prompt
+brew "curl"
+brew "git"
+brew "git-lfs"
+brew "tree"
+brew "gettext"            # i18n libs many tools depend on
+brew "gmp"                # GNU multiple-precision arithmetic
+
+# Modern replacements
+brew "eza"                # ls replacement
+brew "fd"                 # find replacement
+brew "fzf"                # fuzzy finder
+brew "zoxide"             # cd replacement (replaces autojump)
+
+# Dotfile management
+brew "chezmoi"
+
+# -----------------------------------------------------------------------------
+# Languages / runtime managers
+# -----------------------------------------------------------------------------
+brew "mise"               # one tool for python / ruby / node / etc.
+# Removed in mise consolidation: pyenv, rbenv, ruby-build, nvm
+
+# Node kept as system-wide for Claude Code CLI, npm globals (corepack below)
+brew "node"
+
+# -----------------------------------------------------------------------------
+# Cloud / infra
+# -----------------------------------------------------------------------------
+brew "awscli"
+brew "saml2aws"           # SAML-based AWS temporary creds
+
+# -----------------------------------------------------------------------------
+# iOS / Apple-platform dev
+# -----------------------------------------------------------------------------
+brew "fastlane"
+brew "swiftlint"
+
+# -----------------------------------------------------------------------------
+# AI CLIs
+# -----------------------------------------------------------------------------
+brew "gemini-cli"
+# claude-code / cursor-cli are casks (below)
+
+# -----------------------------------------------------------------------------
+# App Store CLI
+# -----------------------------------------------------------------------------
+brew "mas"                # used by the `mas "..."` lines at the bottom
+brew "defaultbrowser"     # set default browser from CLI (used in macos.sh)
+
+
+# =============================================================================
+# Casks (GUI apps)
+# =============================================================================
+
+# --- Password / secrets -------------------------------------------------------
+cask "1password"
+cask "1password-cli"      # required for dot_gitconfig.work.tmpl (onepasswordRead)
+
+# --- Launcher / window mgmt / keyboard ---------------------------------------
+cask "raycast"            # launcher (Alfred removed — Raycast only)
+cask "rectangle"          # window snapping (config in dot_config/rectangle)
+cask "contexts"           # cmd-tab replacement
+cask "ice"                # menu bar manager
+cask "keyboard-maestro"   # macro automation
+cask "keycastr"           # show keystrokes (recording/demos)
+
+# --- Terminal / editor -------------------------------------------------------
+cask "wezterm"
+cask "sublime-text"       # used by `alias zshconfig="subl ~/.zshrc"` in dot_zshrc
+cask "visual-studio-code"
+
+# --- AI / coding -------------------------------------------------------------
+cask "claude-code"
+cask "cursor"
+cask "cursor-cli"
+# NOT-IN-BREW (manual download — see README): Kiro, Antigravity
+
+# --- Dev tools ---------------------------------------------------------------
+cask "fork"               # Git GUI
+cask "bruno"              # API client (Postman-like, open source)
+cask "charles"            # web proxy
+cask "hkamran80/things/multiliner"   # Xcode source extension
+
+# --- Fonts -------------------------------------------------------------------
+cask "font-meslo-lg-nerd-font"   # MesloLGS Nerd Font Mono — used by wezterm.lua
+
+# --- Productivity / utility --------------------------------------------------
+cask "appcleaner"
+cask "unclutter"
+cask "espanso"            # text expander
+cask "cleanshot"          # screenshot + video + scrolling capture + pin-to-screen + hex picker (CleanShot X)
+cask "notion"
+cask "figma"
+
+# --- Cloud / sync ------------------------------------------------------------
+cask "dropbox"
+
+# --- Comm / browser / media --------------------------------------------------
+cask "google-chrome"
+cask "slack"
+cask "discord"
+cask "zoom"
+cask "iina"               # media player
+
+
+# =============================================================================
+# Mac App Store apps
+#
+# NOTE: `mas` is unreliable on a fresh machine — it requires being signed in to
+# the App Store AND each app already being in your purchase history. If lines
+# below fail, install them manually from the App Store, then re-run.
+# =============================================================================
+
+mas "Xcode",                         id: 497799835
+mas "Bitwarden",                     id: 1352778147   # keep until migration off Bitwarden is fully done
+
+# Apple iWork
+mas "Keynote",                       id: 409183694
+mas "Numbers",                       id: 409203825
+mas "Pages",                         id: 409201541
+mas "GarageBand",                    id: 682658836
+mas "iMovie",                        id: 408981434
+
+# Productivity
+mas "Goodnotes",                     id: 1444383602
+mas "Presentation Assistant",        id: 1324964512
+mas "Speedtest",                     id: 1153157709
+mas "urlshortener",                  id: 1437201957
+mas "Exporter",                      id: 1099120373
+
+# Media / utility
+mas "CapCut",                        id: 1500855883
+mas "Free MP4 Converter",            id: 693443591
+mas "Resize Master",                 id: 1025306797
+mas "ColorFolder",                   id: 1450345160
+
+# Dev helpers
+mas "DevCleaner",                    id: 1388020431
+
+# Korean apps
+mas "KakaoTalk",                     id: 869223134
+mas "Bandizip",                      id: 1265704574   # 반디집
+mas "Allkdic",                       id: 1033453958
+mas "Between",                       id: 6743071205
+mas "Hancom Office HWP Viewer",      id: 416746898
+
+
+# =============================================================================
+# VS Code extensions
+# =============================================================================
+vscode "anthropic.claude-code"
+vscode "eamodio.gitlens"
+vscode "editorconfig.editorconfig"
+vscode "esbenp.prettier-vscode"
+vscode "ms-python.debugpy"
+vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"
+vscode "ms-python.vscode-python-envs"
+vscode "ms-vscode.makefile-tools"
+vscode "pkief.material-icon-theme"
+vscode "rubymaniac.vscode-paste-and-indent"
+vscode "streetsidesoftware.code-spell-checker"
+vscode "swiftlang.swift-vscode"
+vscode "timonwong.shellcheck"
+vscode "yzhang.markdown-all-in-one"
+
+
+# =============================================================================
+# npm globals
+# =============================================================================
+npm "corepack"
