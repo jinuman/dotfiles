@@ -32,11 +32,6 @@ export PATH="/Users/jinuman/.antigravity/antigravity/bin:$PATH"
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
 
 # alias 설정
-# python3
-alias python="/opt/homebrew/bin/python3"
-
-# brew
-alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
 
 # zsh 설정 편집
 alias zshconfig="subl ~/.zshrc"
