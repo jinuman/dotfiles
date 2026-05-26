@@ -1,0 +1,10 @@
+# 로그인 시 초기화 필요한 설정
+
+# Homebrew PATH 설정
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# wezterm 옵션
+export LESS='-FR'
+
+# git
+export PATH="$HOME/.config/git:$PATH"
