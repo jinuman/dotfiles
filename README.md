@@ -10,7 +10,7 @@
 | **Homebrew + `bootstrap/Brewfile`** | CLI, GUI 앱, App Store 앱, 폰트 |
 | **chezmoi** | dotfile + 앱 설정 (zsh, git, VS Code, Sublime, Xcode 등) |
 | **`bootstrap/macos.sh`** | 시스템 defaults (`defaults write`) + Caps Lock → Control |
-| **`bootstrap/install.sh`** | `chezmoi apply` + `brew bundle` + `macos.sh` 묶음 |
+| **`Makefile`** | `make apply` / `make brew` / `make macos` / `make all` 묶음 |
 
 > Migration Assistant 안 씀 — 오래된 설정/캐시까지 옮겨와서. 필요한 것만 선언적으로 재구성하는 게 목적.
 
@@ -23,32 +23,50 @@
 | 1 | Apple ID 로그인 | macOS 첫 셋업 |
 | 2 | App Store → Xcode 설치 시작 | 10~30분, 백그라운드 |
 | 3 | `xcode-select --install` | brew prereq, Xcode 본체 기다리지 말고 먼저 |
-| 4 | 1Password 앱 설치 + 로그인 | App Store 또는 1password.com |
-| 5 | 1Password → Settings → Developer → **Use the SSH agent** ON | `private_dot_ssh/config` 가 이 agent socket 가리킴 |
-| 6 | 1Password → Settings → Developer → **Integrate with 1Password CLI** ON | `dot_gitconfig.work.tmpl` 의 `onepasswordRead` 가 필요 |
-| 7 | `ssh -T git@github.com` 로 SSH 동작 확인 | "successfully authenticated" 떠야 함 |
 
-## 2. 부트스트랩 (터미널)
+## 2. 부트스트랩
+
+### 2-1. Homebrew + 필수 패키지
 
 ```sh
-# 1) Homebrew
+# Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# 2) chezmoi + 1Password CLI
-brew install chezmoi 1password-cli
-
-# 3) 1Password CLI 로그인 (1Password 앱이 unlock 상태여야 함)
-eval "$(op signin)"
-
-# 4) dotfiles 가져오기 + 적용
-chezmoi init --apply git@github.com:jinuman/dotfiles.git
-
-# 5) 나머지 자동화 (brew bundle + macos.sh)
-~/.local/share/chezmoi/bootstrap/install.sh
+# 1Password (cask + CLI) + chezmoi
+brew install --cask 1password
+brew install 1password-cli chezmoi
 ```
 
-> 5번이 10~30분 걸림 (brew bundle 이 대부분). 끝나면 macOS 가 "Use Chrome" 다이얼로그를 띄움.
+### 2-2. 1Password GUI 셋업 + CLI 로그인
+
+1Password 앱 실행 → 본인 계정 로그인 → `⌘,` Settings → **Developer**:
+
+- ☑ **Use the SSH agent** — 앞으로 `git push` / 기타 ssh 인증에 사용 (`private_dot_ssh/config` 가 이 socket 가리킴)
+- ☑ **Integrate with 1Password CLI** — `dot_gitconfig.work.tmpl` 의 `onepasswordRead` 에 필요
+
+CLI 로그인:
+```sh
+eval "$(op signin)"     # 1Password 앱 팝업 → Touch ID/Watch 인증
+op whoami               # email/account 출력되면 OK
+```
+
+### 2-3. dotfiles + 자동화
+
+```sh
+# Public repo 라 HTTPS 로 anonymous clone (SSH 없이도 OK)
+chezmoi init https://github.com/jinuman/dotfiles.git
+
+# Makefile 통해 한 번에
+chezmoi cd
+make all
+```
+
+`make all` = `chezmoi apply` + `brew bundle` + `macos.sh` (10~30분).
+끝나면 macOS 가 **"Use Chrome"** 다이얼로그 띄움 → 클릭.
+
+> SSH 는 `git push` 할 때만 필요 — §2-2 의 SSH agent 토글 ON 으로 자동.
+> push 도 SSH 로 가고 싶으면: `git remote set-url origin git@github.com:jinuman/dotfiles.git`
 
 ## 3. 사후 수동 작업
 
@@ -117,9 +135,12 @@ chezmoi diff               # 비어야 정상
 |---|---|
 | dotfile 추가 | `chezmoi add <path>` |
 | dotfile 갱신 (pull + apply) | `chezmoi update` |
-| Brewfile dump | `brew bundle dump --describe --file=~/.local/share/chezmoi/bootstrap/Brewfile --force` |
-| `macos.sh` 재실행 | `bash ~/.local/share/chezmoi/bootstrap/macos.sh` |
+| Brewfile 동기화 | `chezmoi cd && make brew` |
+| `macos.sh` 재실행 | `chezmoi cd && make macos` |
+| 전체 재적용 | `chezmoi cd && make all` |
+| Brewfile dump (전체 갱신) | `brew bundle dump --describe --file=~/.local/share/chezmoi/bootstrap/Brewfile --force` |
 | 변경 커밋 | `chezmoi cd && git add -A && git commit && git push` |
+| Makefile 명령 목록 | `chezmoi cd && make help` |
 
 ## 트러블슈팅
 

@@ -3,5 +3,6 @@
 
 # Repo-only files
 README.md
+Makefile
 bootstrap
 bootstrap/**
