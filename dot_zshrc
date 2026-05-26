@@ -1,0 +1,60 @@
+# Homebrew zsh completions
+if type brew &>/dev/null; then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
+
+# zsh 기본 자동완성 기능 활성화
+autoload -Uz compinit
+compinit
+
+# antidote 초기화
+source "$HOMEBREW_PREFIX/share/antidote/antidote.zsh"
+
+# load zsh plugins
+antidote load < ~/.zsh_plugins.txt
+
+# zoxide 초기화
+eval "$(zoxide init zsh)"
+
+# starship 초기화
+eval "$(starship init zsh)"
+
+# mise 초기화
+eval "$(mise activate zsh)"
+
+# rbenv 초기화
+if [[ -d "$HOME/.rbenv" ]]; then
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
+fi
+
+# 히스토리 substring 검색 바인딩 (↑ ↓ 키)
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+# Added by Antigravity
+export PATH="/Users/jinuman/.antigravity/antigravity/bin:$PATH"
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+
+# alias 설정
+# python3
+alias python="/opt/homebrew/bin/python3"
+
+# brew
+alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
+
+# zsh 설정 편집
+alias zshconfig="subl ~/.zshrc"
+
+# 명령어 alias
+alias l='eza -l --icons=always'
+alias ll='eza -la'
+alias lt='eza -T'
+alias lg='eza -l --git'
+alias j="z"
