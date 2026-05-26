@@ -1,0 +1,5 @@
+# 프롬프트 깔끔하게
+add_newline = false
+
+# 느린 툴 warning 방지 (ex. swift)
+command_timeout = 1000  # ms 단위 (1초)
