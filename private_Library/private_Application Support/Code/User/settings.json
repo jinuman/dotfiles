@@ -1,0 +1,136 @@
+{
+  // ===== Editor =====
+  "editor.fontFamily": "'MesloLGS Nerd Font Mono', Menlo, monospace",
+  "editor.fontSize": 13,
+  "editor.lineHeight": 1.5,
+  "editor.tabSize": 4,
+  "editor.insertSpaces": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.minimap.enabled": false,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.renderWhitespace": "boundary",
+  "editor.cursorBlinking": "smooth",
+  "editor.experimental.preferTreeSitter.css": true,
+
+  // ===== Files =====
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/.git": true,
+  },
+
+  // ===== Workbench (테마 / 아이콘) =====
+  "workbench.colorTheme": "Monokai",
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.startupEditor": "none",
+
+  // ===== Terminal =====
+  "terminal.integrated.fontFamily": "'MesloLGS Nerd Font Mono'",
+  "terminal.integrated.fontSize": 13,
+  "terminal.integrated.defaultProfile.osx": "zsh",
+
+  // ===== Language-specific overrides =====
+  "[python]": {
+    "editor.tabSize": 4,
+    "editor.defaultFormatter": "ms-python.python",
+  },
+  "[swift]": {
+    "editor.tabSize": 4,
+  },
+  "[json]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "vscode.json-language-features",
+  },
+  "[jsonc]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[yaml]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "off",
+      "other": "off",
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "[shellscript]": {
+    "editor.tabSize": 2,
+  },
+
+  // ===== Code Spell Checker =====
+  // 한국어는 무시, 자주 등장하는 도구 이름들은 화이트리스트
+  "cSpell.language": "en",
+  "cSpell.ignoreRegExpList": ["[가-힣]+"],
+  "cSpell.words": [
+    "antidote",
+    "antigravity",
+    "appcleaner",
+    "awscli",
+    "bandizip",
+    "brewfile",
+    "chezmoi",
+    "claudecode",
+    "cleanshot",
+    "cursorcli",
+    "defaultbrowser",
+    "espanso",
+    "fastlane",
+    "fzf",
+    "geminicli",
+    "gitlens",
+    "homebrew",
+    "iina",
+    "jinuman",
+    "jinwoo",
+    "kaleidoscope",
+    "karabiner",
+    "keycastr",
+    "kiro",
+    "macpaw",
+    "meslo",
+    "mise",
+    "multiliner",
+    "neovim",
+    "onedrive",
+    "onepassword",
+    "pylance",
+    "pyenv",
+    "raycast",
+    "rbenv",
+    "rectangle",
+    "saml2aws",
+    "shellcheck",
+    "shottr",
+    "starship",
+    "subl",
+    "sublime",
+    "swiftlang",
+    "swiftlint",
+    "wezterm",
+    "wezterm.lua",
+    "woowahan",
+    "xcsort",
+    "zoxide",
+    "zprofile",
+    "zshrc",
+  ],
+
+  // ===== Git =====
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  "git.openRepositoryInParentFolders": "never",
+
+  // ===== Misc =====
+  "explorer.confirmDelete": true,
+  "explorer.confirmDragAndDrop": false,
+  "telemetry.telemetryLevel": "off",
+}
