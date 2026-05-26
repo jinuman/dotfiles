@@ -1,0 +1,18 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"Package Control",
+		"Swift",
+        "TrailingSpaces",
+        "SideBarEnhancements",
+        "BracketHighlighter",
+        "A File Icon",
+        "ColorHighlight",
+		"MarkdownPreview",
+		"AutoFileName",
+	],
+}

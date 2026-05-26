@@ -1,0 +1,25 @@
+[
+	// Cmd+Shift+O — Open Quickly (Xcode style)
+    { "keys": ["super+shift+o"], "command": "show_overlay", "args": {"overlay": "goto", "show_files": true} },
+
+	// Cmd+Shift+J — 사이드바에서 현재 파일 reveal
+    { "keys": ["super+shift+j"], "command": "reveal_in_side_bar" },
+
+	// Ctrl+I — 선택 영역 re-indent
+    { "keys": ["ctrl+i"], "command": "reindent", "args": {"single_line": false} },
+
+    // Cmd+0 — 사이드바 토글
+    { "keys": ["super+0"], "command": "toggle_side_bar" },
+
+    // Cmd+Ctrl+←/→ — Jump Back/Forward (Xcode의 Go Back/Forward)
+    { "keys": ["super+ctrl+left"], "command": "jump_back" },
+    { "keys": ["super+ctrl+right"], "command": "jump_forward" },
+
+    // Move Line Up/Down (Xcode style)
+    { "keys": ["alt+super+up"], "command": "swap_line_up" },
+    { "keys": ["alt+super+down"], "command": "swap_line_down" },
+
+    // Delete Line (Xcode style)
+    { "keys": ["shift+super+backspace"], "command": "run_macro_file",
+      "args": {"file": "res://Packages/Default/Delete Line.sublime-macro"} }
+]
