@@ -26,9 +26,6 @@ eval "$(mise activate zsh)"
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
-# Added by Antigravity
-export PATH="/Users/jinuman/.antigravity/antigravity/bin:$PATH"
-
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
 
 # alias 설정

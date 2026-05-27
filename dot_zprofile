@@ -6,5 +6,11 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # wezterm 옵션
 export LESS='-FR'
 
+# 1Password SSH agent — ssh-add 같은 도구가 쓰는 SSH_AUTH_SOCK도 1Password 가리키도록
+export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
 # git
 export PATH="$HOME/.config/git:$PATH"
+
+# Added by Antigravity
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
