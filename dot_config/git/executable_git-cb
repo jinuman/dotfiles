@@ -1,7 +1,0 @@
-#!/bin/bash
-# Remove all local merged branches, excluding master and develop
-# Usage: git cb
-
-git branch --merged \
-  | grep -vE '^\*|master|develop' \
-  | xargs -r git branch -d
