@@ -80,7 +80,7 @@ cask "1password-cli"      # required for dot_gitconfig.work.tmpl (onepasswordRea
 cask "raycast"            # launcher (Alfred removed — Raycast only)
 cask "rectangle"          # window snapping (config in dot_config/rectangle)
 cask "contexts"           # cmd-tab replacement
-cask "ice"                # menu bar manager
+cask "jordanbaird-ice"    # menu bar manager
 cask "keyboard-maestro"   # macro automation
 cask "keycastr"           # show keystrokes (recording/demos)
 

@@ -150,19 +150,46 @@ System Settings → Desktop & Dock → **Default web browser** → Google Chrome
 - **Chrome**: Google 계정 로그인 → 북마크/확장/비밀번호 sync, 1Password 확장 설치
 - **Slack / Discord / Notion / Figma / Zoom**: 각자 로그인
 
-### 3-8. 라이센스 입력 (1Password 에서 꺼냄)
+### 3-8. Dock app-to-Desktop 할당 (수동)
+
+자주 쓰는 앱을 특정 데스크탑에 묶어서 단축키로 빠르게 도달하기.
+
+> ⚠️ 이 단계는 다른 모든 `make macos` / `make all` 실행이 끝난 뒤 한 번에 진행. 이후 `make macos` 재실행 시 일부 할당이 풀릴 위험 있음 (macOS 의 Space UUID 가 `killall Dock` 또는 디스플레이 변경 시 변하는 알려진 quirk).
+
+**준비**
+
+1. **Mission Control (F3)** 열기 → 우상단 `+` 클릭 4번 → 데스크탑 5개 만들기
+2. 외부 모니터 사용 예정이면 **미리 연결**. 디스플레이 구성 바뀌면 Space UUID 가 변동될 수 있음.
+
+**할당**
+
+원하는 Desktop 으로 이동 → 그 데스크탑에서 해당 앱 실행 → **Dock 의 그 앱 아이콘 우클릭 → Options → Assign To → This Desktop**
+
+| Desktop | 앱 |
+|---|---|
+| 1 | Chrome |
+| 2 | WezTerm, Sublime Text, Notion, Notes, Obsidian |
+| 3 | Xcode, Claude, Cursor |
+| 4 | Fork, Figma |
+| 5 | Slack, KakaoTalk |
+
+**알려진 한계**
+
+- 디스플레이 변경 / OS 메이저 업그레이드 / `killall Dock` 다발 후 가끔 할당이 풀림 → 그땐 다시 위 절차
+
+### 3-9. 라이센스 입력 (1Password 에서 꺼냄)
 
 - Sublime Text
 - Keyboard Maestro
 - CleanShot X
 
-### 3-9. 클라우드 sync 시작
+### 3-10. 클라우드 sync 시작
 
 - **iCloud** 로그인 (Drive/Photos 는 데이터 크기 보고 선택적으로)
 - **Dropbox** 로그인 → sync 대기 (KM `.kmsync` 동기화에 필요)
 - Time Machine 외장하드 연결 (있으면)
 
-### 3-10. Brew cask 없는 앱 직접 다운로드 (선택)
+### 3-11. Brew cask 없는 앱 직접 다운로드 (선택)
 
 - **Kiro** ([kiro.dev](https://kiro.dev)) — `dot_zshrc` 에 shell integration 라인 이미 있음
 - **Antigravity** — `dot_zshrc` 의 `~/.antigravity/antigravity/bin` PATH 가리킴
