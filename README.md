@@ -86,11 +86,62 @@ make all
 | Screen Recording | CleanShot, Zoom, Slack |
 | Full Disk Access | Dropbox, AppCleaner |
 
-### 3-2. 기본 브라우저
+### 3-2. 기본 브라우저 → Chrome
 
-`macos.sh` 끝에 macOS 보안 다이얼로그가 뜸 → **"Use 'Google Chrome'"** 클릭. (Apple 정책상 자동화 불가)
+System Settings → Desktop & Dock → **Default web browser** → Google Chrome 선택.
 
-### 3-3. 앱별 import / 로그인
+> 또는 Chrome 첫 실행 시 자동으로 "Make Chrome default?" 다이얼로그가 뜨면 그때 Yes 클릭.
+
+### 3-3. 키보드 단축키 (System Settings → Keyboard → Keyboard Shortcuts)
+
+`defaults write` 로 자동 설정해도 macOS 가 부팅 시 일부 reset 해버려서 **UI 에서 손으로** 잡는 게 가장 안정적.
+
+| 카테고리 | 항목 | 값 |
+|---|---|---|
+| Spotlight | Show Spotlight Search | `⌥Space` |
+| Spotlight | Show Finder search window | `⌥⌘Space` (기본) |
+| Input Sources | Select the previous input source | `⌘Space` (한/영 토글) |
+| Mission Control | Show Desktop | `⌥D` |
+| Mission Control | Switch to Desktop 1 | `⌃1` |
+| Mission Control | Switch to Desktop 2 | `⌃2` |
+| Mission Control | Switch to Desktop 3 | `⌃3` |
+| Mission Control | Switch to Desktop 4 | `⌃4` |
+| Mission Control | Switch to Desktop 5 | `⌃5` |
+
+> "Switch to Desktop N" 이 회색이면 Mission Control(F3) 열어서 데스크탑 5개까지 미리 만들어 둬야 활성화됨.
+
+### 3-4. Trackpad gestures (System Settings → Trackpad + Accessibility)
+
+`defaults write` 로 자동화 가능하지만 일부 macOS 버전에서 부팅 시 reset 됨. UI 에서 직접 토글.
+
+| 위치 | 설정 | 값 |
+|---|---|---|
+| Trackpad → Point & Click | Tap to click | ☑ ON |
+| Trackpad → Point & Click | Look up & data detectors | Tap with Three Fingers |
+| Trackpad → More Gestures | Swipe between full-screen applications | Swipe Left or Right with Four Fingers |
+| Trackpad → More Gestures | Mission Control | Swipe Up with Four Fingers |
+| Accessibility → Pointer Control → Trackpad Options | Use trackpad for dragging | ☑ ON, Dragging style: **Three Finger Drag** |
+
+### 3-5. Desktop & Stage Manager (System Settings → Desktop & Dock)
+
+| 항목 | 값 |
+|---|---|
+| Click wallpaper to show desktop | Always |
+| Stage Manager | OFF |
+
+### 3-6. Windows (System Settings → Desktop & Dock)
+
+| 항목 | 값 |
+|---|---|
+| Prefer tabs when opening documents | In Full Screen |
+| Ask to keep changes when closing documents | OFF |
+| Close windows when quitting an application | OFF |
+| Drag windows to left or right edge of screen to tile | OFF |
+| Drag windows to menu bar to fill screen | OFF |
+| Hold ⌥ key while dragging windows to tile | OFF |
+| Tiled windows have margins | OFF |
+
+### 3-7. 앱별 import / 로그인
 
 - **Rectangle**: Settings → Import Config → `~/.config/rectangle/config.json`
 - **Keyboard Maestro**: Editor → File → Start Syncing Macros → Dropbox 안 `Keyboard Maestro Macros.kmsync`
@@ -99,19 +150,19 @@ make all
 - **Chrome**: Google 계정 로그인 → 북마크/확장/비밀번호 sync, 1Password 확장 설치
 - **Slack / Discord / Notion / Figma / Zoom**: 각자 로그인
 
-### 3-4. 라이센스 입력 (1Password 에서 꺼냄)
+### 3-8. 라이센스 입력 (1Password 에서 꺼냄)
 
 - Sublime Text
 - Keyboard Maestro
 - CleanShot X
 
-### 3-5. 클라우드 sync 시작
+### 3-9. 클라우드 sync 시작
 
 - **iCloud** 로그인 (Drive/Photos 는 데이터 크기 보고 선택적으로)
 - **Dropbox** 로그인 → sync 대기 (KM `.kmsync` 동기화에 필요)
 - Time Machine 외장하드 연결 (있으면)
 
-### 3-6. Brew cask 없는 앱 직접 다운로드 (선택)
+### 3-10. Brew cask 없는 앱 직접 다운로드 (선택)
 
 - **Kiro** ([kiro.dev](https://kiro.dev)) — `dot_zshrc` 에 shell integration 라인 이미 있음
 - **Antigravity** — `dot_zshrc` 의 `~/.antigravity/antigravity/bin` PATH 가리킴
