@@ -28,8 +28,10 @@
 [alias]
     st = status
     co = checkout
+    cb = checkout -b
     br = branch
     ci = commit
     last = log -1 HEAD
     lg = log --oneline --decorate --graph
     unstage = reset HEAD --
+    cleanup = "!git branch --merged | grep -vE '^[*+]|master|develop' | xargs -r git branch -d"
