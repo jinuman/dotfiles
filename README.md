@@ -104,11 +104,8 @@ System Settings → Desktop & Dock → **Default web browser** → Google Chrome
 | Mission Control | Show Desktop | `⌥D` |
 | Mission Control | Switch to Desktop 1 | `⌃1` |
 | Mission Control | Switch to Desktop 2 | `⌃2` |
-| Mission Control | Switch to Desktop 3 | `⌃3` |
-| Mission Control | Switch to Desktop 4 | `⌃4` |
-| Mission Control | Switch to Desktop 5 | `⌃5` |
 
-> "Switch to Desktop N" 이 회색이면 Mission Control(F3) 열어서 데스크탑 5개까지 미리 만들어 둬야 활성화됨.
+> "Switch to Desktop N" 이 회색이면 Mission Control(F3) 열어 데스크탑 2개부터 만들기.
 
 ### 3-4. Trackpad gestures (System Settings → Trackpad + Accessibility)
 
@@ -150,32 +147,19 @@ System Settings → Desktop & Dock → **Default web browser** → Google Chrome
 - **Chrome**: Google 계정 로그인 → 북마크/확장/비밀번호 sync, 1Password 확장 설치
 - **Slack / Discord / Notion / Figma / Zoom**: 각자 로그인
 
-### 3-8. Dock app-to-Desktop 할당 (수동)
+### 3-8. Desktop 운영 (2-Desktop + 풀스크린)
 
-자주 쓰는 앱을 특정 데스크탑에 묶어서 단축키로 빠르게 도달하기.
+| Desktop | 용도 | 고정 앱 |
+|---|---|---|
+| 1 | Ambient (알림, 가벼운 작업) | Chrome, Slack, KakaoTalk |
+| 2 | Production + AI (실제 작업) | Xcode, Cursor, Claude, ChatGPT, Fork, Figma, WezTerm, Sublime, Notion, Obsidian |
+| 풀스크린 (`⌘⌃F`) | 집중 작업 | 필요한 앱 그때그때 |
 
-> ⚠️ 이 단계는 다른 모든 `make macos` / `make all` 실행이 끝난 뒤 한 번에 진행. 이후 `make macos` 재실행 시 일부 할당이 풀릴 위험 있음 (macOS 의 Space UUID 가 `killall Dock` 또는 디스플레이 변경 시 변하는 알려진 quirk).
+준비: Mission Control(F3) → `+` 한 번 → 데스크탑 2개.
 
-**준비**
+할당: 원하는 데스크탑으로 이동 → 앱 실행 → **Dock 우클릭 → Options → Assign To → This Desktop**.
 
-1. **Mission Control (F3)** 열기 → 우상단 `+` 클릭 4번 → 데스크탑 5개 만들기
-2. 외부 모니터 사용 예정이면 **미리 연결**. 디스플레이 구성 바뀌면 Space UUID 가 변동될 수 있음.
-
-**할당**
-
-원하는 Desktop 으로 이동 → 그 데스크탑에서 해당 앱 실행 → **Dock 의 그 앱 아이콘 우클릭 → Options → Assign To → This Desktop**
-
-| Desktop | 앱 |
-|---|---|
-| 1 | Chrome |
-| 2 | WezTerm, Sublime Text, Notion, Notes, Obsidian |
-| 3 | Xcode, Claude, Cursor |
-| 4 | Fork, Figma |
-| 5 | Slack, KakaoTalk |
-
-**알려진 한계**
-
-- 디스플레이 변경 / OS 메이저 업그레이드 / `killall Dock` 다발 후 가끔 할당이 풀림 → 그땐 다시 위 절차
+> `make macos` 재실행 후 가끔 풀릴 수 있음. 그땐 위 절차 반복.
 
 ### 3-9. 라이센스 입력 (1Password 에서 꺼냄)
 
@@ -198,7 +182,7 @@ System Settings → Desktop & Dock → **Default web browser** → Google Chrome
 
 ```sh
 # 키보드 단축키 (System Settings → Keyboard → Keyboard Shortcuts)
-#   Spotlight = ⌥Space, Input source = ⌘Space, Switch Desktop = ⌃1..⌃5
+#   Spotlight = ⌥Space, Input source = ⌘Space, Switch Desktop = ⌃1 / ⌃2
 #   Caps Lock 키 누르면 Control 동작
 
 # 셸
