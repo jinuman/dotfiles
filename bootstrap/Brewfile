@@ -106,7 +106,6 @@ cask "font-meslo-lg-nerd-font"   # MesloLGS Nerd Font Mono — used by wezterm.l
 
 # --- Productivity / utility --------------------------------------------------
 cask "appcleaner"
-cask "unclutter"
 cask "espanso"            # text expander
 cask "cleanshot"          # screenshot + video + scrolling capture + pin-to-screen + hex picker (CleanShot X)
 cask "notion"
@@ -130,9 +129,6 @@ cask "iina"               # media player
 # the App Store AND each app already being in your purchase history. If lines
 # below fail, install them manually from the App Store, then re-run.
 # =============================================================================
-
-mas "Xcode",                         id: 497799835
-mas "Bitwarden",                     id: 1352778147   # keep until migration off Bitwarden is fully done
 
 # Apple iWork
 mas "Keynote",                       id: 409183694
