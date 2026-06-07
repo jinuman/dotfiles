@@ -5,14 +5,14 @@
 	],
 	"installed_packages":
 	[
-		"Package Control",
-		"Swift",
-        "TrailingSpaces",
-        "SideBarEnhancements",
-        "BracketHighlighter",
-        "A File Icon",
-        "ColorHighlight",
-		"MarkdownPreview",
+		"A File Icon",
 		"AutoFileName",
+        "BracketHighlighter",
+        "MarkdownEditing",
+        "MarkdownPreview",
+        "Package Control",
+		"SideBarEnhancements",
+		"Swift",
+		"TrailingSpaces",
 	],
 }
