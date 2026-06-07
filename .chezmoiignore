@@ -6,3 +6,9 @@ README.md
 Makefile
 bootstrap
 bootstrap/**
+
+# 쉴 새 없이 바뀌는 plist — 평소엔 무시해 make update 노이즈 차단 (source 파일은 레포에 그대로 둠)
+#   cfprefsd/Contexts 가 CTUsageCount·SULastCheckTime·MSAppCenter… 를 실행마다 다시 써서
+#   설정을 안 건드려도 매번 diff 가 뜨던 파일.
+# 진짜 설정을 백업하려면: 아래 줄 맨 앞에 "# " 붙여 잠깐 주석 → make update → 주석 해제 → 커밋
+Library/Preferences/com.contextsformac.Contexts.plist

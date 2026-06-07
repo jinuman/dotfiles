@@ -232,6 +232,7 @@ chezmoi diff               # 비어야 정상
 - **`mas` 실패** → App Store 로그인 후 해당 앱 한 번 받기(구매 내역) → `brew bundle ...` 재실행
 - **`onepasswordRead` 에러** → `op whoami` 로 상태 확인. 안 되어 있으면 `eval "$(op signin)"` 후 재시도
 - **`chezmoi diff` plist drift 반복** → 해당 앱 (VS Code 등) 종료 후 `make update` (또는 단일 파일 `chezmoi re-add <path>`) 로 source 갱신. `make update` 뒤 `git diff` 로 휘발성 변경은 빼고 커밋
+- **쉴 새 없이 바뀌는 plist** (예: `com.contextsformac.Contexts.plist` — cfprefsd 가 usage count·업데이트 체크 시각을 계속 다시 씀) → `.chezmoiignore` 에 넣어 평소엔 무시. 진짜 설정 바꿔 백업할 때만 그 줄을 잠깐 `#` 주석 처리 → `make update` → 주석 해제 → 커밋
 - **`chezmoi inconsistent state`** → 중복 디렉터리 (예: `Library` vs `private_Library`) 한쪽 제거
 - **Caps Lock → Control 안 됨** → Karabiner-Elements 잔존 가능. `sudo /Library/Application\ Support/org.pqrs/Karabiner-Elements/uninstall/uninstall_karabiner_elements.sh` + 재부팅
 - **단축키 일부 안 먹음** → macOS 메이저 업그레이드 후 symbolichotkeys ID 어긋남. System Settings 에서 수동 지정
