@@ -1,7 +1,7 @@
 # ~/.gitconfig (디폴트: 개인 계정)
 [user]
     name = Jinwoo Kim
-    email = jinumandev@gmail.com
+    email = gnuspecial+dev@gmail.com
 
 [core]
     editor = vim
