@@ -2,9 +2,13 @@
 # =============================================================================
 # macos.sh — fire-and-forget 시스템 defaults
 #
-# 원칙: `defaults write` 로 안정적으로 persisting 되는 것 + Caps Lock remap
-# 만 자동화. System Settings UI 에서 토글로 보이고 user-confirmation 이 필요한
-# 항목들은 README §3 의 수동 체크리스트로.
+# 원칙 — 여기엔 다음 둘 다 만족하는 것만 넣는다:
+#   (1) macOS 업데이트로 안 깨짐   (2) side-effect 없음 (보안/동작 변경 X)
+# 그래서 키보드 단축키(symbolichotkeys), Trackpad gestures 처럼 update 때
+# reset 되거나 UI 확인이 필요한 건 README §3 수동 체크리스트로 뺀다.
+# (Finder 태그는 둘 다 아님 — iCloud 가 Mac 간 동기화.)
+# 예외: Caps Lock→Control 은 hidutil+LaunchAgent 라 System Settings 방식보다
+#       오히려 update-robust → 여기 유지.
 #
 # 멱등성 있음 — 여러 번 돌려도 안전.
 # 일부 설정은 logout/재부팅 후 완전히 반영됨 (스크립트 끝에서 daemon 재시작).
@@ -25,7 +29,6 @@ osascript -e 'tell application "System Settings" to quit' 2>/dev/null || true
 # General UI / UX
 # -----------------------------------------------------------------------------
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true              # 파일 확장자 항상 보이기
-defaults write com.apple.LaunchServices LSQuarantine -bool false             # "정말 열까요?" 다이얼로그 끄기
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false   # 자동 맞춤법 끔
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false    # 스마트 따옴표 끔
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false     # 스마트 대시 끔

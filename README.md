@@ -77,6 +77,8 @@ make all
 
 자동화 불가능한 단발성 셋업. 위에서부터 순서대로.
 
+> **macos.sh 에 둘까 vs 수동일까** — `macos.sh` 엔 (1) macOS 업데이트로 안 깨지고 (2) side-effect 없는 `defaults` 만 둔다. 아래가 수동인 이유: **키보드 단축키**(`symbolichotkeys` — 부팅/업데이트 시 ID 어긋나 reset), **Trackpad gestures**(일부 버전서 reset), **앱 권한·로그인·라이센스**(UI 확인 필수). 한 번 손으로 잡으면 대개 유지되니 새 Mac 셋업 때만 보고 따라가면 된다. (Finder 태그는 iCloud 가 동기화 → §3-3 은 확인만.)
+
 ### 3-1. 앱 권한 (System Settings → Privacy & Security)
 
 | 권한 | 부여할 앱 |
@@ -92,7 +94,13 @@ System Settings → Desktop & Dock → **Default web browser** → Google Chrome
 
 > 또는 Chrome 첫 실행 시 자동으로 "Make Chrome default?" 다이얼로그가 뜨면 그때 Yes 클릭.
 
-### 3-3. 키보드 단축키 (System Settings → Keyboard → Keyboard Shortcuts)
+### 3-3. Finder 태그 — iCloud 자동 (확인만)
+
+§3-11 에서 iCloud 로그인하면 태그 정의(이름·색·사이드바)가 **자동 동기화**된다. 보통 손댈 필요 없고 셋업 후 한 번 확인만. 안 넘어올 때만 Finder → `⌘,` Settings → Tags 에서 수동 생성: **Doc** 🔵 / **Tmp** 🟡 / **Out** 🔴.
+
+> 조건: 같은 Apple ID + iCloud Drive ON. 동기화가 가끔 누락/지연된다는 보고가 있어 fallback 으로 색만 적어둠. 파일에 붙은 태그 값은 `com.apple.metadata:_kMDItemUserTags` 확장속성이라 `defaults` 와 무관하게 파일 따라 이동.
+
+### 3-4. 키보드 단축키 (System Settings → Keyboard → Keyboard Shortcuts)
 
 `defaults write` 로 자동 설정해도 macOS 가 부팅 시 일부 reset 해버려서 **UI 에서 손으로** 잡는 게 가장 안정적.
 
@@ -105,10 +113,13 @@ System Settings → Desktop & Dock → **Default web browser** → Google Chrome
 | Mission Control | Switch to Desktop 1 | `⌃1` |
 | Mission Control | Switch to Desktop 2 | `⌃2` |
 | Mission Control | Switch to Desktop 3 | `⌃3` |
+| Screenshots | (전체 단축키) | 다 끔 — CleanShot 사용 |
 
 > "Switch to Desktop N" 이 회색이면 Mission Control(F3) 열어 데스크탑 3개부터 만들기.
+>
+> **Modifier Keys → Caps Lock → Control** 은 `macos.sh` 가 hidutil 로 이미 처리 (System Settings 방식보다 update-robust) — 여기선 안 건드려도 됨.
 
-### 3-4. Trackpad gestures (System Settings → Trackpad + Accessibility)
+### 3-5. Trackpad gestures (System Settings → Trackpad + Accessibility)
 
 `defaults write` 로 자동화 가능하지만 일부 macOS 버전에서 부팅 시 reset 됨. UI 에서 직접 토글.
 
@@ -118,16 +129,18 @@ System Settings → Desktop & Dock → **Default web browser** → Google Chrome
 | Trackpad → Point & Click | Look up & data detectors | Tap with Three Fingers |
 | Trackpad → More Gestures | Swipe between full-screen applications | Swipe Left or Right with Four Fingers |
 | Trackpad → More Gestures | Mission Control | Swipe Up with Four Fingers |
+| Trackpad → More Gestures | App Exposé | Swipe Down with Four Fingers |
 | Accessibility → Pointer Control → Trackpad Options | Use trackpad for dragging | ☑ ON, Dragging style: **Three Finger Drag** |
+| Accessibility → Zoom | Use scroll gesture with modifier keys to zoom | ☑ ON (`⌃` + scroll) |
 
-### 3-5. Desktop & Stage Manager (System Settings → Desktop & Dock)
+### 3-6. Desktop & Stage Manager (System Settings → Desktop & Dock)
 
 | 항목 | 값 |
 |---|---|
 | Click wallpaper to show desktop | Always |
 | Stage Manager | OFF |
 
-### 3-6. Windows (System Settings → Desktop & Dock)
+### 3-7. Windows (System Settings → Desktop & Dock)
 
 | 항목 | 값 |
 |---|---|
@@ -139,7 +152,7 @@ System Settings → Desktop & Dock → **Default web browser** → Google Chrome
 | Hold ⌥ key while dragging windows to tile | OFF |
 | Tiled windows have margins | OFF |
 
-### 3-7. 앱별 import / 로그인
+### 3-8. 앱별 import / 로그인
 
 - **Rectangle**: Settings → Import Config → `~/.config/rectangle/config.json`
 - **Keyboard Maestro**: Editor → File → Start Syncing Macros → Dropbox 안 `Keyboard Maestro Macros.kmsync`
@@ -148,7 +161,7 @@ System Settings → Desktop & Dock → **Default web browser** → Google Chrome
 - **Chrome**: Google 계정 로그인 → 북마크/확장/비밀번호 sync, 1Password 확장 설치
 - **Slack / Discord / Notion / Figma / Zoom**: 각자 로그인
 
-### 3-8. Desktop 운영 (3-Desktop)
+### 3-9. Desktop 운영 (3-Desktop)
 
 종일 떠 있는 **앵커 앱만** 데스크탑에 고정한다. 나머지(호출형·백그라운드)는 어디서 켜든 따라오므로 고정하지 않는다.
 
@@ -172,18 +185,18 @@ System Settings → Desktop & Dock → **Default web browser** → Google Chrome
 
 > `make macos` 재실행 후 가끔 풀릴 수 있음. 그땐 위 절차 반복.
 
-### 3-9. 라이센스 입력 (1Password 에서 꺼냄)
+### 3-10. 라이센스 입력 (1Password 에서 꺼냄)
 
 - Keyboard Maestro
 - CleanShot X
 - Contexts
 
-### 3-10. 클라우드 sync 시작
+### 3-11. 클라우드 sync 시작
 
 - **iCloud** 로그인 (Drive/Photos 는 데이터 크기 보고 선택적으로)
 - **Dropbox** 로그인 → sync 대기 (KM `.kmsync` 동기화에 필요)
 
-### 3-11. Brew cask 없는 앱 직접 다운로드 (선택)
+### 3-12. Brew cask 없는 앱 직접 다운로드 (선택)
 
 - **Kiro** ([kiro.dev](https://kiro.dev)) — `dot_zshrc` 에 shell integration 라인 이미 있음
 - **Antigravity** — `dot_zshrc` 의 `~/.antigravity/antigravity/bin` PATH 가리킴
