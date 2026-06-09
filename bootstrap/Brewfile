@@ -60,6 +60,11 @@ brew "gemini-cli"
 # claude-code / cursor-cli are casks (below)
 
 # -----------------------------------------------------------------------------
+# Media / image
+# -----------------------------------------------------------------------------
+brew "pngquant"           # lossy PNG compression (asset optimization)
+
+# -----------------------------------------------------------------------------
 # App Store CLI
 # -----------------------------------------------------------------------------
 brew "mas"                # used by the `mas "..."` lines at the bottom
@@ -147,7 +152,6 @@ mas "Exporter",                      id: 1099120373
 # Media / utility
 mas "CapCut",                        id: 1500855883
 mas "Free MP4 Converter",            id: 693443591
-mas "Resize Master",                 id: 1025306797
 mas "ColorFolder",                   id: 1450345160
 
 # Dev helpers
