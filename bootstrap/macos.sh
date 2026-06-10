@@ -4,6 +4,7 @@
 #
 # 원칙 — 여기엔 다음 둘 다 만족하는 것만 넣는다:
 #   (1) macOS 업데이트로 안 깨짐   (2) side-effect 없음 (보안/동작 변경 X)
+#   (3) 이미 macOS 기본값인 건 넣지 않음 — Apple 이 기본 바꾸면 그 변화를 따라가도록
 # 그래서 키보드 단축키(symbolichotkeys), Trackpad gestures 처럼 update 때
 # reset 되거나 UI 확인이 필요한 건 README §3 수동 체크리스트로 뺀다.
 # (Finder 태그는 둘 다 아님 — iCloud 가 Mac 간 동기화.)
@@ -95,13 +96,6 @@ chflags nohidden ~/Library || true                                       # ~/Lib
 defaults write com.apple.dock tilesize -int 36                           # Size: Small (기본 64)
 defaults write com.apple.dock magnification -bool true                   # Magnification 켬
 defaults write com.apple.dock largesize -int 64                          # Magnification 시 최대 크기
-defaults write com.apple.dock orientation -string "bottom"               # Dock 위치
-defaults write com.apple.dock mineffect -string "genie"                  # 최소화 애니메이션: Genie
-defaults write NSGlobalDomain AppleActionOnDoubleClick -string "Maximize"  # 타이틀바 더블클릭 = Zoom
-defaults write com.apple.dock minimize-to-application -bool false        # 앱 아이콘으로 최소화 끔
-defaults write com.apple.dock autohide -bool false                       # 자동 숨김 끔
-defaults write com.apple.dock launchanim -bool true                      # 앱 실행 애니메이션 켬
-defaults write com.apple.dock show-process-indicators -bool true         # 실행 중 인디케이터 표시
 defaults write com.apple.dock show-recents -bool false                   # Suggested/recent apps 숨김
 # Hot Corners 끄기
 for corner in wvous-tl-corner wvous-tr-corner wvous-bl-corner wvous-br-corner; do
@@ -116,7 +110,6 @@ defaults write com.apple.dock mru-spaces -bool false                     # Space
 defaults write NSGlobalDomain AppleSpacesSwitchOnActivate -bool true     # 앱 전환 시 그 앱의 Space 로 따라가기 ON
                                                                           # (false 면 KM/Raycast/⌘Tab 으로 cross-space 포커싱 X)
 defaults write com.apple.dock expose-group-apps -bool false              # 앱별 그룹화 끔
-defaults write com.apple.spaces spans-displays -bool false               # Displays have separate Spaces: ON
 
 
 # -----------------------------------------------------------------------------
@@ -124,7 +117,6 @@ defaults write com.apple.spaces spans-displays -bool false               # Displ
 # -----------------------------------------------------------------------------
 mkdir -p "${HOME}/Pictures/Screenshots"
 defaults write com.apple.screencapture location -string "${HOME}/Pictures/Screenshots"
-defaults write com.apple.screencapture type -string "png"
 defaults write com.apple.screencapture disable-shadow -bool true
 
 
