@@ -110,6 +110,7 @@ cask "hkamran80/things/multiliner"   # Xcode source extension
 cask "font-meslo-lg-nerd-font"   # MesloLGS Nerd Font Mono — used by wezterm.lua
 
 # --- Productivity / utility --------------------------------------------------
+cask "logi-options+"      # Logitech 마우스 버튼·스크롤 방향·SmartWheel 커스텀
 cask "appcleaner"
 cask "espanso"            # text expander
 cask "cleanshot"          # screenshot + video + scrolling capture + pin-to-screen + hex picker (CleanShot X)
