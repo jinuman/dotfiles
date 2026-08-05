@@ -23,11 +23,10 @@ help: ## 명령 목록 출력
 	@awk -F':.*##' '/^[a-zA-Z_-]+:.*##/ {printf "  \033[36m%-8s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 # Sanity check — install.sh 가 하던 가드와 동일
-check: ## 환경 sanity check (macOS / brew / chezmoi / op 사인인)
+check: ## 환경 sanity check (macOS / brew / chezmoi)
 	@[ "$$(uname)" = "Darwin" ] || { echo "✗ macOS only"; exit 1; }
 	@command -v brew    >/dev/null 2>&1 || { echo "✗ brew 없음 — README §2-1"; exit 1; }
 	@command -v chezmoi >/dev/null 2>&1 || { echo "✗ chezmoi 없음 — brew install chezmoi"; exit 1; }
-	@op whoami          >/dev/null 2>&1 || { echo "✗ op 미로그인 — eval \"\$$(op signin)\""; exit 1; }
 	@echo "✓ sanity OK"
 
 # chezmoi source → ~ 로 배포

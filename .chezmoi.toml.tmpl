@@ -1,0 +1,4 @@
+{{- /* chezmoi init 때 한 번 입력받아 ~/.config/chezmoi/chezmoi.toml 에 저장.
+     공개 레포에 회사 이메일을 올리지 않기 위한 머신 로컬 데이터 (재 init 시 기존 값 재사용) */ -}}
+[data]
+    work_email = {{ promptStringOnce . "work_email" "회사 git 이메일" | quote }}

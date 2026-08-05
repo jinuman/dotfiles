@@ -79,7 +79,7 @@ brew "defaultbrowser"     # set default browser from CLI (used in macos.sh)
 # 1Password 는 README §2-1 에서 수동 설치 (cask SHA가 upstream 과 자주 어긋나서
 # brew bundle 통째로 실패시킴). 이미 /Applications 에 있으면 skip.
 cask "1password" unless File.directory?("/Applications/1Password.app")
-cask "1password-cli"      # required for dot_gitconfig.work.tmpl (onepasswordRead)
+cask "1password-cli"      # op CLI — 선택 (chezmoi 템플릿에선 더 이상 사용 안 함)
 
 # --- Launcher / window mgmt / keyboard ---------------------------------------
 cask "raycast"            # launcher (Alfred removed — Raycast only)

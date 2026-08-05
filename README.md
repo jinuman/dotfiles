@@ -48,18 +48,13 @@ brew install chezmoi
 1Password 앱 실행 → 본인 계정 로그인 → `⌘,` Settings → **Developer**:
 
 - ☑ **Use the SSH agent** — 앞으로 `git push` / 기타 ssh 인증에 사용 (`private_dot_ssh/config` 가 이 socket 가리킴)
-- ☑ **Integrate with 1Password CLI** — `dot_gitconfig.work.tmpl` 의 `onepasswordRead` 에 필요
-
-CLI 로그인:
-```sh
-eval "$(op signin)"     # 1Password 앱 팝업 → Touch ID/Watch 인증
-op whoami               # email/account 출력되면 OK
-```
+- ☑ **Integrate with 1Password CLI** — 선택 (chezmoi 는 op 를 안 씀. `op` CLI 를 다른 용도로 쓸 때만)
 
 ### 2-3. dotfiles + 자동화
 
 ```sh
 # Public repo 라 HTTPS 로 anonymous clone (SSH 없이도 OK)
+# init 중 "회사 git 이메일" 1회 입력 → ~/.config/chezmoi/chezmoi.toml 에 저장 (레포엔 안 올라감)
 chezmoi init https://github.com/jinuman/dotfiles.git
 
 # Makefile 통해 한 번에
