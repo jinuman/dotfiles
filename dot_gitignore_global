@@ -6,3 +6,5 @@ DerivedData/
 *.hmap
 *.ipa
 *.dSYM.zip
+
+**/.claude/settings.local.json

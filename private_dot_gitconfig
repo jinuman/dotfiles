@@ -2,6 +2,7 @@
 [user]
     name = Jinwoo Kim
     email = gnuspecial+dev@gmail.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII1AhX2Qyd5z11Aj3zPDpcTnNiJVcWpXRc91UW3IQNaX id_ed25519
 
 [core]
     editor = vim
@@ -35,3 +36,9 @@
     lg = log --oneline --decorate --graph
     unstage = reset HEAD --
     cleanup = "!git branch --merged | grep -vE '^[*+]|master|develop' | xargs -r git branch -d"
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true
