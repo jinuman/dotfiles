@@ -28,6 +28,12 @@ bindkey '^[[B' history-substring-search-down
 
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
 
+# 커스텀 zsh 모듈 로드 (~/.config/zsh/*.zsh — chezmoi 로 관리)
+for config_file in ~/.config/zsh/*.zsh(N); do
+  source "$config_file"
+done
+unset config_file
+
 # alias 설정
 
 # zsh 설정 편집

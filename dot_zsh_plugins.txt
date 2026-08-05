@@ -5,3 +5,8 @@ zsh-users/zsh-autosuggestions
 zsh-users/zsh-completions
 zsh-users/zsh-history-substring-search
 hlissner/zsh-autopair
+
+# git 단축 alias (gst, gco, gcb, gp ...) — oh-my-zsh git 플러그인
+# lib/git.zsh 는 플러그인이 쓰는 git_current_branch 함수 제공 (먼저 로드)
+ohmyzsh/ohmyzsh path:lib/git.zsh
+ohmyzsh/ohmyzsh path:plugins/git
