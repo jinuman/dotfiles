@@ -121,16 +121,9 @@ defaults write com.apple.screencapture disable-shadow -bool true
 
 
 # -----------------------------------------------------------------------------
-# Activity Monitor — All Processes 뷰 + Dock 아이콘에 CPU 그래프
-# -----------------------------------------------------------------------------
-defaults write com.apple.ActivityMonitor ShowCategory -int 0
-defaults write com.apple.ActivityMonitor IconType -int 5
-
-
-# -----------------------------------------------------------------------------
 # 변경 사항 일부 즉시 반영을 위해 관련 daemon/앱 재시작
 # -----------------------------------------------------------------------------
-for app in "Activity Monitor" "Dock" "Finder" "SystemUIServer" "cfprefsd"; do
+for app in "Dock" "Finder" "SystemUIServer" "cfprefsd"; do
   killall "$app" >/dev/null 2>&1 || true
 done
 

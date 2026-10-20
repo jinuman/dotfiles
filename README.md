@@ -43,12 +43,17 @@ brew install chezmoi
 
 > `brew install --cask 1password` 가 `Cask reports different checksum` 으로 실패하면 MacPaw upstream 과 homebrew-cask 가 어긋난 일시적 상황. 직접 다운로드 후 다음 단계로 진행.
 
-### 2-2. 1Password GUI 셋업 + CLI 로그인
+### 2-2. 1Password GUI 셋업 + SSH 키
 
 1Password 앱 실행 → 본인 계정 로그인 → `⌘,` Settings → **Developer**:
 
-- ☑ **Use the SSH agent** — 앞으로 `git push` / 기타 ssh 인증에 사용 (`private_dot_ssh/config` 가 이 socket 가리킴)
+- ☑ **Use the SSH agent** — ssh 인증 + git 커밋 서명에 사용 (`private_dot_ssh/config` 가 이 socket 가리킴)
 - ☑ **Integrate with 1Password CLI** — 선택 (chezmoi 는 op 를 안 씀. `op` CLI 를 다른 용도로 쓸 때만)
+
+SSH 키는 work/personal 구분 없이 1Password 의 `id_ed25519` 하나. 새 서비스엔 이 키의 공개키를 등록:
+
+- GitHub → Settings → SSH and GPG keys: Authentication Key + Signing Key
+- git.baemin.in → Preferences → SSH Keys (Authentication & Signing)
 
 ### 2-3. dotfiles + 자동화
 
@@ -65,7 +70,7 @@ make all
 `make all` = `chezmoi apply` + `brew bundle` + `macos.sh` (10~30분).
 끝나면 macOS 가 **"Use Chrome"** 다이얼로그 띄움 → 클릭.
 
-> SSH 는 `git push` 할 때만 필요 — §2-2 의 SSH agent 토글 ON 으로 자동.
+> SSH agent 는 commit 서명과 push 에 필요 — §2-2 의 토글 ON 이면 자동.
 > push 도 SSH 로 가고 싶으면: `git remote set-url origin git@github.com:jinuman/dotfiles.git`
 
 ## 3. 사후 수동 작업
@@ -151,6 +156,7 @@ System Settings → Desktop & Dock → **Default web browser** → Google Chrome
 
 - **Rectangle**: Settings → Import Config → `~/.config/rectangle/config.json`
 - **Keyboard Maestro**: Editor → File → Start Syncing Macros → Dropbox 안 `Keyboard Maestro Macros.kmsync`
+- **Raycast**: Settings → Advanced → Import → Dropbox `settings/raycast/*.rayconfig` → Extensions → Script Commands → Add Directories → `~/.config/raycast/script-commands`
 - **Xcode**: Settings → Themes → **Monokai**. Custom Key Bindings set 있으면 같이 선택.
 - **VS Code**: GitHub/계정 로그인 → settings sync (선택)
 - **Chrome**: Google 계정 로그인 → 북마크/확장/비밀번호 sync, 1Password 확장 설치
@@ -238,7 +244,6 @@ chezmoi diff               # 비어야 정상
 ## 트러블슈팅
 
 - **`mas` 실패** → App Store 로그인 후 해당 앱 한 번 받기(구매 내역) → `brew bundle ...` 재실행
-- **`onepasswordRead` 에러** → `op whoami` 로 상태 확인. 안 되어 있으면 `eval "$(op signin)"` 후 재시도
 - **`chezmoi diff` plist drift 반복** → 해당 앱 (VS Code 등) 종료 후 `make update` (또는 단일 파일 `chezmoi re-add <path>`) 로 source 갱신. `make update` 뒤 `git diff` 로 휘발성 변경은 빼고 커밋
 - **쉴 새 없이 바뀌는 plist** (예: `com.contextsformac.Contexts.plist` — cfprefsd 가 usage count·업데이트 체크 시각을 계속 다시 씀) → `.chezmoiignore` 에 넣어 평소엔 무시. 진짜 설정 바꿔 백업할 때만 그 줄을 잠깐 `#` 주석 처리 → `make update` → 주석 해제 → 커밋
 - **`chezmoi inconsistent state`** → 중복 디렉터리 (예: `Library` vs `private_Library`) 한쪽 제거

@@ -95,6 +95,7 @@ cask "sublime-text"       # used by `alias zshconfig="subl ~/.zshrc"` in dot_zsh
 cask "visual-studio-code"
 
 # --- AI / coding -------------------------------------------------------------
+cask "claude"             # Claude 데스크탑 앱
 cask "claude-code"
 cask "cursor"
 cask "cursor-cli"
@@ -116,6 +117,7 @@ cask "espanso"            # text expander
 cask "cleanshot"          # screenshot + video + scrolling capture + pin-to-screen + hex picker (CleanShot X)
 cask "notion"
 cask "figma"
+cask "obsidian"
 
 # --- Cloud / sync ------------------------------------------------------------
 cask "dropbox"
@@ -145,10 +147,11 @@ mas "iMovie",                        id: 408981434
 
 # Productivity
 mas "Goodnotes",                     id: 1444383602
-mas "Presentation Assistant",        id: 1324964512
+mas "ScreenBrush",                   id: 1233965871   # 화면 위 드로잉/주석 (Presentation Assistant 대체)
 mas "Speedtest",                     id: 1153157709
 mas "urlshortener",                  id: 1437201957
 mas "Exporter",                      id: 1099120373
+mas "Unclutter",                     id: 577085396
 
 # Media / utility
 mas "CapCut",                        id: 1500855883
