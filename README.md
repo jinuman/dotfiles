@@ -43,14 +43,15 @@ brew install chezmoi
 
 > `brew install --cask 1password` 가 `Cask reports different checksum` 으로 실패하면 MacPaw upstream 과 homebrew-cask 가 어긋난 일시적 상황. 직접 다운로드 후 다음 단계로 진행.
 
-### 2-2. 1Password GUI 셋업 + SSH 키
+### 2-2. 1Password SSH Agent
 
-1Password 앱 실행 → 본인 계정 로그인 → `⌘,` Settings → **Developer**:
+1Password 앱 실행 → 로그인 → `⌘,` Settings → **Developer**:
 
-- ☑ **Use the SSH agent** — ssh 인증 + git 커밋 서명에 사용 (`private_dot_ssh/config` 가 이 socket 가리킴)
-- ☑ **Integrate with 1Password CLI** — 선택 (chezmoi 는 op 를 안 씀. `op` CLI 를 다른 용도로 쓸 때만)
+1. **Set up the SSH Agent** 클릭 → "Allow 1Password to save SSH key names to disk?" → **Use Key Names**
+2. `~/.ssh/config` 수정 제안이 뜨면 건너뜀 (chezmoi 가 씀)
+3. Developer Integrations → ☑ **Integrate with 1Password CLI**
 
-SSH 키는 work/personal 구분 없이 1Password 의 `id_ed25519` 하나. 새 서비스엔 이 키의 공개키를 등록:
+최초 1회, 1Password 의 `id_ed25519` 공개키 등록:
 
 - GitHub → Settings → SSH and GPG keys: Authentication Key + Signing Key
 - git.baemin.in → Preferences → SSH Keys (Authentication & Signing)
