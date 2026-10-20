@@ -24,7 +24,7 @@
 				<key>Navigation</key>
 				<string>NO</string>
 				<key>Parent Title</key>
-				<string>Multiliner</string>
+				<string>MultilinerExtension</string>
 				<key>Title</key>
 				<string>Format Selected Code</string>
 			</dict>
