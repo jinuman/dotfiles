@@ -2,7 +2,7 @@
 # =============================================================================
 # macos.sh — fire-and-forget 시스템 defaults
 #
-# 원칙 — 여기엔 다음 둘 다 만족하는 것만 넣는다:
+# 원칙 — 여기엔 다음 셋 다 만족하는 것만 넣는다:
 #   (1) macOS 업데이트로 안 깨짐   (2) side-effect 없음 (보안/동작 변경 X)
 #   (3) 이미 macOS 기본값인 건 넣지 않음 — Apple 이 기본 바꾸면 그 변화를 따라가도록
 # 그래서 키보드 단축키(symbolichotkeys), Trackpad gestures 처럼 update 때
@@ -17,10 +17,6 @@
 set -euo pipefail
 
 echo "==> Applying macOS system defaults…"
-
-# sudo 미리 인증받고 백그라운드로 유지
-sudo -v
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 # System Settings 가 열려있으면 끄기
 osascript -e 'tell application "System Settings" to quit' 2>/dev/null || true
@@ -74,7 +70,7 @@ launchctl load "$CAPS_PLIST"
 # Trackpad / Mouse — 커서 속도만 (gesture 들은 README §3 의 수동 체크리스트)
 # -----------------------------------------------------------------------------
 defaults write -g com.apple.trackpad.scaling -float 2.0      # 트랙패드 커서 속도
-defaults write -g com.apple.mouse.scaling -float 2.5         # 마우스 커서 속도
+defaults write -g com.apple.mouse.scaling -float 1.0         # 마우스 커서 속도
 
 
 # -----------------------------------------------------------------------------
@@ -84,7 +80,6 @@ defaults write com.apple.finder AppleShowAllFiles -bool true             # 숨�
 defaults write com.apple.finder ShowPathbar -bool true                   # 경로 표시줄
 defaults write com.apple.finder ShowStatusBar -bool true                 # 상태 표시줄
 defaults write com.apple.finder _FXShowPosixPathInTitle -bool true       # 타이틀에 전체 경로
-defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"      # 기본 리스트 뷰
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true   # 네트워크 .DS_Store 안 만들기
 defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true       # USB .DS_Store 안 만들기
 chflags nohidden ~/Library || true                                       # ~/Library 보이게
@@ -97,6 +92,7 @@ defaults write com.apple.dock tilesize -int 36                           # Size:
 defaults write com.apple.dock magnification -bool true                   # Magnification 켬
 defaults write com.apple.dock largesize -int 64                          # Magnification 시 최대 크기
 defaults write com.apple.dock show-recents -bool false                   # Suggested/recent apps 숨김
+defaults write NSGlobalDomain AppleActionOnDoubleClick -string "Maximize"   # 타이틀바 더블클릭 → Zoom
 # Hot Corners 끄기
 for corner in wvous-tl-corner wvous-tr-corner wvous-bl-corner wvous-br-corner; do
   defaults write com.apple.dock "$corner" -int 0
@@ -104,12 +100,19 @@ done
 
 
 # -----------------------------------------------------------------------------
+# Windows (System Settings → Desktop & Dock → Windows)
+# -----------------------------------------------------------------------------
+defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool true                 # 앱 종료 시 창 닫지 않음
+defaults write com.apple.WindowManager EnableTilingByEdgeDrag -bool false         # 화면 좌우 끝 드래그 타일링 끔
+defaults write com.apple.WindowManager EnableTopTilingByEdgeDrag -bool false      # 메뉴바로 드래그해 채우기 끔
+defaults write com.apple.WindowManager EnableTilingOptionAccelerator -bool false  # ⌥ 드래그 타일링 끔
+defaults write com.apple.WindowManager EnableTiledWindowMargins -bool false       # 타일 창 여백 끔
+
+
+# -----------------------------------------------------------------------------
 # Mission Control (System Settings → Desktop & Dock → Mission Control)
 # -----------------------------------------------------------------------------
 defaults write com.apple.dock mru-spaces -bool false                     # Spaces 자동 재배치 끔
-defaults write NSGlobalDomain AppleSpacesSwitchOnActivate -bool true     # 앱 전환 시 그 앱의 Space 로 따라가기 ON
-                                                                          # (false 면 KM/Raycast/⌘Tab 으로 cross-space 포커싱 X)
-defaults write com.apple.dock expose-group-apps -bool false              # 앱별 그룹화 끔
 
 
 # -----------------------------------------------------------------------------
@@ -121,9 +124,9 @@ defaults write com.apple.screencapture disable-shadow -bool true
 
 
 # -----------------------------------------------------------------------------
-# 변경 사항 일부 즉시 반영을 위해 관련 daemon/앱 재시작
+# 변경 사항 일부 즉시 반영을 위해 관련 앱 재시작
 # -----------------------------------------------------------------------------
-for app in "Dock" "Finder" "SystemUIServer" "cfprefsd"; do
+for app in "Dock" "Finder" "SystemUIServer"; do
   killall "$app" >/dev/null 2>&1 || true
 done
 
@@ -133,11 +136,9 @@ cat <<'EOF'
 ==> macos.sh 완료. 자동화 영역 끝.
 
 이제 README §3 사후 수동 작업 체크리스트로 넘어가세요:
-  - 앱 권한 부여
-  - 키보드 단축키 (Spotlight, 한/영, Mission Control)
-  - Trackpad gestures
-  - Desktop & Stage Manager, Window tiling 토글
-  - 기본 브라우저 → Chrome
-  - 앱 로그인 + 라이센스 입력
+  - 클라우드 로그인 / 앱 권한
+  - 키보드 단축키 / Trackpad
+  - Desktop & Dock (기본 브라우저, Stage Manager)
+  - 앱 import / 로그인 / 라이센스
 
 EOF

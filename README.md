@@ -9,8 +9,8 @@ Mac Setup 자동화! **위에서 아래로 따라가면 환경이 완성**된다
 | **1Password** | passwords, SSH key, API tokens, 앱 라이센스 |
 | **Homebrew + `bootstrap/Brewfile`** | CLI, GUI 앱, App Store 앱, 폰트 |
 | **chezmoi** | dotfile + 앱 설정 (zsh, git, VS Code, Sublime, Xcode 등) |
-| **`bootstrap/macos.sh`** | 시스템 defaults (`defaults write`) + Caps Lock → Control |
-| **`Makefile`** | 셋업 `make all`(apply+brew+macos) · 일상 `make status` / `make update` (바꾼 설정 → 레포 흡수) |
+| **`bootstrap/macos.sh`** | macOS 업데이트로 안 깨지는 시스템 defaults + Caps Lock → Control |
+| **`Makefile`** | 셋업 `make all`(apply+brew+macos) · 일상 `make status` / `make update` |
 
 > Migration Assistant 안 씀 — 오래된 설정/캐시까지 옮겨와서. 필요한 것만 선언적으로 재구성하는 게 목적.
 
@@ -69,41 +69,30 @@ make all
 ```
 
 `make all` = `chezmoi apply` + `brew bundle` + `macos.sh` (10~30분).
-끝나면 macOS 가 **"Use Chrome"** 다이얼로그 띄움 → 클릭.
 
-> SSH agent 는 commit 서명과 push 에 필요 — §2-2 의 토글 ON 이면 자동.
 > push 도 SSH 로 가고 싶으면: `git remote set-url origin git@github.com:jinuman/dotfiles.git`
 
 ## 3. 사후 수동 작업
 
 자동화 불가능한 단발성 셋업. 위에서부터 순서대로.
 
-> **macos.sh 에 둘까 vs 수동일까** — `macos.sh` 엔 (1) macOS 업데이트로 안 깨지고 (2) side-effect 없는 `defaults` 만 둔다. 아래가 수동인 이유: **키보드 단축키**(`symbolichotkeys` — 부팅/업데이트 시 ID 어긋나 reset), **Trackpad gestures**(일부 버전서 reset), **앱 권한·로그인·라이센스**(UI 확인 필수). 한 번 손으로 잡으면 대개 유지되니 새 Mac 셋업 때만 보고 따라가면 된다. (Finder 태그는 iCloud 가 동기화 → §3-3 은 확인만.)
+> 단축키·트랙패드 제스처는 macOS 업데이트 때 reset 되기 쉬워 `macos.sh` 대신 여기서 손으로 잡는다.
 
-### 3-1. 앱 권한 (System Settings → Privacy & Security)
+### 3-1. 클라우드 로그인
+
+- **iCloud** 로그인 (Drive/Photos 는 데이터 크기 보고 선택적으로) — Finder 태그 **Doc** 🔵 / **Tmp** 🟡 / **Out** 🔴 가 따라오는지 확인
+- **Dropbox** 로그인 → sync 대기 (§3-7 의 Keyboard Maestro · Raycast import 에 필요)
+
+### 3-2. 앱 권한 (System Settings → Privacy & Security)
 
 | 권한 | 부여할 앱 |
 |---|---|
-| Accessibility | Raycast, Rectangle, Contexts, Keyboard Maestro, Espanso, KeyCastr, Ice |
-| Input Monitoring | KeyCastr, Espanso |
+| Accessibility | Raycast, Rectangle, Contexts, Keyboard Maestro, KeyCastr, Ice |
+| Input Monitoring | KeyCastr |
 | Screen Recording | CleanShot, Zoom, Slack |
 | Full Disk Access | Dropbox, AppCleaner |
 
-### 3-2. 기본 브라우저 → Chrome
-
-System Settings → Desktop & Dock → **Default web browser** → Google Chrome 선택.
-
-> 또는 Chrome 첫 실행 시 자동으로 "Make Chrome default?" 다이얼로그가 뜨면 그때 Yes 클릭.
-
-### 3-3. Finder 태그 — iCloud 자동 (확인만)
-
-§3-11 에서 iCloud 로그인하면 태그 정의(이름·색·사이드바)가 **자동 동기화**된다. 보통 손댈 필요 없고 셋업 후 한 번 확인만. 안 넘어올 때만 Finder → `⌘,` Settings → Tags 에서 수동 생성: **Doc** 🔵 / **Tmp** 🟡 / **Out** 🔴.
-
-> 조건: 같은 Apple ID + iCloud Drive ON. 동기화가 가끔 누락/지연된다는 보고가 있어 fallback 으로 색만 적어둠. 파일에 붙은 태그 값은 `com.apple.metadata:_kMDItemUserTags` 확장속성이라 `defaults` 와 무관하게 파일 따라 이동.
-
-### 3-4. 키보드 단축키 (System Settings → Keyboard → Keyboard Shortcuts)
-
-`defaults write` 로 자동 설정해도 macOS 가 부팅 시 일부 reset 해버려서 **UI 에서 손으로** 잡는 게 가장 안정적.
+### 3-3. 키보드 단축키 (System Settings → Keyboard → Keyboard Shortcuts)
 
 | 카테고리 | 항목 | 값 |
 |---|---|---|
@@ -118,11 +107,9 @@ System Settings → Desktop & Dock → **Default web browser** → Google Chrome
 
 > "Switch to Desktop N" 이 회색이면 Mission Control(F3) 열어 데스크탑 3개부터 만들기.
 >
-> **Modifier Keys → Caps Lock → Control** 은 `macos.sh` 가 hidutil 로 이미 처리 (System Settings 방식보다 update-robust) — 여기선 안 건드려도 됨.
+> **Caps Lock → Control** 은 `macos.sh` 가 이미 처리.
 
-### 3-5. Trackpad gestures (System Settings → Trackpad + Accessibility)
-
-`defaults write` 로 자동화 가능하지만 일부 macOS 버전에서 부팅 시 reset 됨. UI 에서 직접 토글.
+### 3-4. Trackpad (System Settings → Trackpad + Accessibility)
 
 | 위치 | 설정 | 값 |
 |---|---|---|
@@ -134,36 +121,19 @@ System Settings → Desktop & Dock → **Default web browser** → Google Chrome
 | Accessibility → Pointer Control → Trackpad Options | Use trackpad for dragging | ☑ ON, Dragging style: **Three Finger Drag** |
 | Accessibility → Zoom | Use scroll gesture with modifier keys to zoom | ☑ ON (`⌃` + scroll) |
 
-### 3-6. Desktop & Stage Manager (System Settings → Desktop & Dock)
+### 3-5. Desktop & Dock (System Settings → Desktop & Dock)
 
 | 항목 | 값 |
 |---|---|
+| Default web browser | Google Chrome |
+| Prefer tabs when opening documents | In Full Screen |
+| Ask to keep changes when closing documents | OFF |
 | Click wallpaper to show desktop | Always |
 | Stage Manager | OFF |
 
-### 3-7. Windows (System Settings → Desktop & Dock)
+> 타이틀바 더블클릭 · 앱 종료 시 창 유지 · 타일링 토글은 `macos.sh` 가 처리.
 
-| 항목 | 값 |
-|---|---|
-| Prefer tabs when opening documents | In Full Screen |
-| Ask to keep changes when closing documents | OFF |
-| Close windows when quitting an application | OFF |
-| Drag windows to left or right edge of screen to tile | OFF |
-| Drag windows to menu bar to fill screen | OFF |
-| Hold ⌥ key while dragging windows to tile | OFF |
-| Tiled windows have margins | OFF |
-
-### 3-8. 앱별 import / 로그인
-
-- **Rectangle**: Settings → Import Config → `~/.config/rectangle/config.json`
-- **Keyboard Maestro**: Editor → File → Start Syncing Macros → Dropbox 안 `Keyboard Maestro Macros.kmsync`
-- **Raycast**: Settings → Advanced → Import → Dropbox `settings/raycast/*.rayconfig` → Extensions → Script Commands → Add Directories → `~/.config/raycast/script-commands`
-- **Xcode**: Settings → Themes → **Monokai**. Custom Key Bindings set 있으면 같이 선택.
-- **VS Code**: GitHub/계정 로그인 → settings sync (선택)
-- **Chrome**: Google 계정 로그인 → 북마크/확장/비밀번호 sync, 1Password 확장 설치
-- **Slack / Discord / Notion / Figma / Zoom**: 각자 로그인
-
-### 3-9. Desktop 운영 (3-Desktop)
+### 3-6. Desktop 운영 (3-Desktop)
 
 종일 떠 있는 **앵커 앱만** 데스크탑에 고정한다. 나머지(호출형·백그라운드)는 어디서 켜든 따라오므로 고정하지 않는다.
 
@@ -179,29 +149,27 @@ System Settings → Desktop & Dock → **Default web browser** → Google Chrome
 > **Claude Code / Gemini CLI**: WezTerm 안에서 도는 CLI라 별도 고정 불필요 (D2).
 > **집중 작업**: 앱을 풀스크린(`⌃⌘F`)으로 — macOS 가 임시 Space 를 만들어 위에 얹는다.
 
-**전역 앱 (Assign 하지 말 것 — `None` 유지):** Raycast, 1Password, CleanShot, KeyCastr, Dropbox, Espanso, Keyboard Maestro, Ice, Rectangle, Contexts, Charles, AppCleaner, iWork, IINA, Bandizip, Allkdic 등 호출형·백그라운드 앱. `macos.sh` 의 `AppleSpacesSwitchOnActivate=true` 때문에 이들을 데스크탑에 고정하면 **켤 때마다 그 데스크탑으로 끌려간다** — 고정 안 해야 '지금 보던' 데스크탑에 뜬다.
+**전역 앱 (Assign 하지 말 것 — `None` 유지):** Raycast, 1Password, CleanShot, KeyCastr, Dropbox, Keyboard Maestro, Ice, Rectangle, Contexts, Charles, AppCleaner, iWork, IINA, Bandizip, Allkdic 등 호출형·백그라운드 앱. 앱 전환 시 그 앱의 Space 로 따라가는 macOS 기본 동작 때문에 이들을 데스크탑에 고정하면 **켤 때마다 그 데스크탑으로 끌려간다** — 고정 안 해야 '지금 보던' 데스크탑에 뜬다.
 
 준비: Mission Control → `+` 두 번 → 데스크탑 3개.
 
 할당 (앵커 앱만): 원하는 데스크탑으로 이동 → 앱 실행 → **Dock 우클릭 → Options → Assign To → This Desktop**.
 
-> `make macos` 재실행 후 가끔 풀릴 수 있음. 그땐 위 절차 반복.
+### 3-7. 앱별 import / 로그인 / 라이센스
 
-### 3-10. 라이센스 입력 (1Password 에서 꺼냄)
+- **Rectangle**: Settings → Import Config → `~/.config/rectangle/config.json`
+- **Keyboard Maestro**: Editor → File → Start Syncing Macros → Dropbox 안 `Keyboard Maestro Macros.kmsync`
+- **Raycast**: Settings → Advanced → Import → Dropbox `settings/raycast/*.rayconfig` → Extensions → Script Commands → Add Directories → `~/.config/raycast/script-commands`
+- **Xcode**: Settings → Themes → **Monokai**, Key Bindings → **Default**
+- **VS Code**: 계정 로그인만 (Settings Sync 는 끔 — 설정은 chezmoi 가 관리)
+- **Chrome**: Google 계정 로그인 → 북마크/확장/비밀번호 sync, 1Password 확장 설치
+- **Slack / Discord / Notion / Figma / Zoom**: 각자 로그인
+- **라이센스** (1Password): Keyboard Maestro, CleanShot X, Contexts
 
-- Keyboard Maestro
-- CleanShot X
-- Contexts
+### 3-8. Brewfile 에 없는 앱 (선택)
 
-### 3-11. 클라우드 sync 시작
-
-- **iCloud** 로그인 (Drive/Photos 는 데이터 크기 보고 선택적으로)
-- **Dropbox** 로그인 → sync 대기 (KM `.kmsync` 동기화에 필요)
-
-### 3-12. Brew cask 없는 앱 직접 다운로드 (선택)
-
-- **Kiro** ([kiro.dev](https://kiro.dev)) — `dot_zshrc` 에 shell integration 라인 이미 있음
-- **Antigravity** — `dot_zshrc` 의 `~/.antigravity/antigravity/bin` PATH 가리킴
+- **Kiro** ([kiro.dev](https://kiro.dev)) — `dot_zshrc` 에 shell integration 라인 있음
+- **Antigravity** — `dot_zprofile` 에 `~/.antigravity/antigravity/bin` PATH 있음
 
 ## 4. 동작 확인
 
@@ -232,22 +200,18 @@ chezmoi diff               # 비어야 정상
 | Brewfile 동기화 | `chezmoi cd && make brew` |
 | `macos.sh` 재실행 | `chezmoi cd && make macos` |
 | 전체 재적용 | `chezmoi cd && make all` |
-| Brewfile dump (전체 갱신) | `brew bundle dump --describe --file=~/.local/share/chezmoi/bootstrap/Brewfile --force` |
 | 변경 커밋 | `chezmoi cd && git add -A && git commit && git push` |
 | Makefile 명령 목록 | `chezmoi cd && make help` |
 
-> **설정 바꾼 뒤 루틴**: `make status` 로 뭐가 바뀌었나 보고 → `make update` 로 레포에 흡수 → `git diff` 검토 후 커밋. 파일마다 `chezmoi re-add <path>` 칠 필요 없이 한 방에 끝.
+> **`make update` ≠ `chezmoi update`** — `make update` 는 **~ → 레포** (`chezmoi re-add`), `chezmoi update` 는 **원격 → ~** (git pull 후 apply).
 >
-> **`make update` ≠ `chezmoi update`** — 방향이 반대다. `make update` 는 **~ → 레포** (`chezmoi re-add`, 내가 바꾼 설정 흡수), `chezmoi update` 는 **원격 → ~** (git pull 후 apply).
->
-> `make update` 는 **이미 관리 중인 파일의 변경만** 담는다 (템플릿 `*.tmpl` 은 건드리지 않음). 앱을 새로 깔아 **새 설정 파일**이 생겼으면 최초 1회만 `chezmoi add <path>`, 그 뒤부턴 `make update` 가 자동으로 따라간다. `make status` 1열에 안 보이면 아직 미관리라는 뜻.
+> `make update` 는 이미 관리 중인 파일만 담는다. 새 설정 파일은 최초 1회 `chezmoi add <path>`.
 
 ## 트러블슈팅
 
-- **`mas` 실패** → App Store 로그인 후 해당 앱 한 번 받기(구매 내역) → `brew bundle ...` 재실행
-- **`chezmoi diff` plist drift 반복** → 해당 앱 (VS Code 등) 종료 후 `make update` (또는 단일 파일 `chezmoi re-add <path>`) 로 source 갱신. `make update` 뒤 `git diff` 로 휘발성 변경은 빼고 커밋
-- **쉴 새 없이 바뀌는 plist** (예: `com.contextsformac.Contexts.plist` — cfprefsd 가 usage count·업데이트 체크 시각을 계속 다시 씀) → `.chezmoiignore` 에 넣어 평소엔 무시. 진짜 설정 바꿔 백업할 때만 그 줄을 잠깐 `#` 주석 처리 → `make update` → 주석 해제 → 커밋
+- **`mas` 실패** → App Store 로그인 후 해당 앱 한 번 받기(구매 내역) → `make brew` 재실행
+- **`chezmoi diff` plist drift 반복** → 해당 앱 종료 후 `make update` (또는 `chezmoi re-add <path>`). `git diff` 로 휘발성 변경은 빼고 커밋
+- **쉴 새 없이 바뀌는 plist** (예: Contexts) → `.chezmoiignore` 에 넣어 평소엔 무시. 백업할 때만 그 줄을 잠깐 `#` 주석 → `make update` → 주석 해제 → 커밋
 - **`chezmoi inconsistent state`** → 중복 디렉터리 (예: `Library` vs `private_Library`) 한쪽 제거
-- **Caps Lock → Control 안 됨** → Karabiner-Elements 잔존 가능. `sudo /Library/Application\ Support/org.pqrs/Karabiner-Elements/uninstall/uninstall_karabiner_elements.sh` + 재부팅
-- **단축키 일부 안 먹음** → macOS 메이저 업그레이드 후 symbolichotkeys ID 어긋남. System Settings 에서 수동 지정
+- **단축키 일부 안 먹음** → macOS 메이저 업그레이드 후 reset. System Settings 에서 다시 지정
 - **`subl` 또는 `code` 명령 없음** → 새 셸 열거나 `eval "$(brew shellenv)"`
