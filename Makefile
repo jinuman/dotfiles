@@ -88,5 +88,5 @@ macos: check ## bash bootstrap/macos.sh
 # 전체 — 새 맥에서 한 번에 진행할 때
 all: apply brew macos ## apply + brew + macos
 	@echo ""
-	@echo "==> 완료. README §3 사후 수동 작업 참고."
+	@echo "==> 완료. README §3 이후 수동 작업 참고."
 	@echo "   주요: 앱 권한 부여 / Use Chrome 다이얼로그 / iCloud·Dropbox / 라이센스"

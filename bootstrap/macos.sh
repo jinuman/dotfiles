@@ -135,10 +135,6 @@ cat <<'EOF'
 
 ==> macos.sh 완료. 자동화 영역 끝.
 
-이제 README §3 사후 수동 작업 체크리스트로 넘어가세요:
-  - 클라우드 로그인 / 앱 권한
-  - 키보드 단축키 / Trackpad
-  - Desktop & Dock (기본 브라우저, Stage Manager)
-  - 앱 import / 로그인 / 라이센스
+이제 README §3 이후 수동 작업으로 넘어가세요.
 
 EOF
